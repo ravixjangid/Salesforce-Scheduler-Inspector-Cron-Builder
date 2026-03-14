@@ -1,0 +1,64 @@
+{
+  "manifest_version": 3,
+  "name": "Salesforce Scheduler Inspector & Cron Builder",
+  "version": "1.1.0",
+  "description": "Monitor Salesforce scheduled jobs, review org-aware run status, and build Quartz cron expressions",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage",
+    "cookies",
+    "alarms",
+    "notifications"
+  ],
+  "host_permissions": [
+    "https://*.salesforce.com/*",
+    "https://*.force.com/*",
+    "https://*.lightning.force.com/*",
+    "https://*.my.salesforce.com/*"
+  ],
+  "action": {
+    "default_title": "Salesforce Scheduler Inspector & Cron Builder",
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "salesforce-launcher.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "popup.html",
+        "popup.css",
+        "popup.js",
+        "cron-maker.html",
+        "cron-maker.css",
+        "cron-maker.js",
+        "utils/salesforce-api.js",
+        "icons/icon16.png",
+        "icons/icon48.png",
+        "icons/icon128.png"
+      ],
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ]
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}

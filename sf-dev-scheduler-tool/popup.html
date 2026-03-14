@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Salesforce Scheduler Inspector & Cron Builder</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+<div class="app-shell">
+  <header class="hero">
+    <div class="hero-brand">
+      <div class="brand-tile" aria-hidden="true">
+        <svg viewBox="0 0 48 48" class="brand-icon">
+          <rect x="7" y="10" width="34" height="28" rx="8"></rect>
+          <path d="M16 19h16M16 24h16M16 29h10"></path>
+        </svg>
+      </div>
+      <div>
+        <p class="eyebrow">Salesforce Scheduler Inspector &amp; Cron Builder</p>
+        <h1>Scheduler Inspector</h1>
+      </div>
+    </div>
+
+    <div class="hero-actions">
+      <button id="refreshBtn" class="button-primary">
+        <span class="button-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <path d="M20 12a8 8 0 1 1-2.34-5.66"></path>
+            <path d="M20 4v6h-6"></path>
+          </svg>
+        </span>
+        <span>Refresh</span>
+      </button>
+      <div id="lastUpdated" class="meta"></div>
+    </div>
+  </header>
+
+  <section class="stats" aria-label="Scheduler summary" role="tablist">
+    <button class="card stat-card stat-tab is-active" data-view="active" type="button" aria-pressed="true">
+      <div class="stat-top">
+        <span class="stat-icon blue" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <path d="M4 6h16M4 12h16M4 18h10"></path>
+          </svg>
+        </span>
+        <span class="stat-label">Active Schedulers</span>
+      </div>
+      <div class="stat-value" id="activeSchedulers">0</div>
+    </button>
+
+    <button class="card stat-card stat-tab" data-view="runs-today" type="button" aria-pressed="false">
+      <div class="stat-top">
+        <span class="stat-icon indigo" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 6v6l4 2"></path>
+            <circle cx="12" cy="12" r="8"></circle>
+          </svg>
+        </span>
+        <span class="stat-label">Runs Today</span>
+      </div>
+      <div class="stat-value" id="runsToday">0</div>
+    </button>
+
+    <button class="card stat-card stat-tab" data-view="passed-today" type="button" aria-pressed="false">
+      <div class="stat-top">
+        <span class="stat-icon green" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <path d="M7 12l3 3 7-7"></path>
+          </svg>
+        </span>
+        <span class="stat-label">Passed Today</span>
+      </div>
+      <div class="stat-value" id="passedToday">0</div>
+    </button>
+
+    <button class="card stat-card stat-tab" data-view="failed-today" type="button" aria-pressed="false">
+      <div class="stat-top">
+        <span class="stat-icon red" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <path d="M8 8l8 8M16 8l-8 8"></path>
+          </svg>
+        </span>
+        <span class="stat-label">Failed Today</span>
+      </div>
+      <div class="stat-value" id="failedToday">0</div>
+    </button>
+
+    <button class="card stat-card stat-tab" data-view="will-run-today" type="button" aria-pressed="false">
+      <div class="stat-top">
+        <span class="stat-icon amber" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 7v5l3 3"></path>
+            <circle cx="12" cy="12" r="8"></circle>
+          </svg>
+        </span>
+        <span class="stat-label">Will Run Today</span>
+      </div>
+      <div class="stat-value" id="willRunToday">0</div>
+    </button>
+  </section>
+
+  <section class="debug-strip" aria-label="Scheduler debug status">
+    <div class="debug-pill">
+      <span class="debug-label">Timezone</span>
+      <strong class="debug-value" id="debugTimezone">-</strong>
+    </div>
+    <div class="debug-pill">
+      <span class="debug-label">Schedules</span>
+      <strong class="debug-value" id="debugScheduleSource">-</strong>
+    </div>
+    <div class="debug-pill">
+      <span class="debug-label">Async Jobs</span>
+      <strong class="debug-value" id="debugAsyncSource">-</strong>
+    </div>
+    <div class="debug-pill">
+      <span class="debug-label">Status</span>
+      <strong class="debug-value" id="debugStatus">-</strong>
+    </div>
+  </section>
+
+  <section class="health-strip" aria-label="Scheduler health indicators">
+    <div class="health-pill">
+      <span class="debug-label">Data Freshness</span>
+      <strong class="debug-value" id="healthFreshness">Loading...</strong>
+    </div>
+    <div class="health-pill">
+      <span class="debug-label">Last Success</span>
+      <strong class="debug-value" id="healthLastSuccess">-</strong>
+    </div>
+    <div class="health-pill">
+      <span class="debug-label">Async Health</span>
+      <strong class="debug-value" id="healthAsync">-</strong>
+    </div>
+    <div class="health-pill">
+      <span class="debug-label">Org</span>
+      <strong class="debug-value" id="healthOrg">-</strong>
+    </div>
+  </section>
+
+  <section class="control-strip" aria-label="Scheduler controls">
+    <div class="control-group timezone-group">
+      <span class="control-label">Time Basis</span>
+      <div class="segmented-control">
+        <button class="timezone-toggle" data-timezone-mode="browser" type="button" aria-pressed="true">Browser Time</button>
+        <button class="timezone-toggle" data-timezone-mode="org" type="button" aria-pressed="false">Org Time</button>
+      </div>
+    </div>
+
+    <label class="control-group search-group">
+      <span class="control-label">Search</span>
+      <input id="searchInput" class="control-input" type="search" placeholder="Search scheduler or class">
+    </label>
+
+    <label class="control-group filter-group">
+      <span class="control-label">Status</span>
+      <select id="statusFilter" class="control-select">
+        <option value="all">All statuses</option>
+        <option value="waiting">Waiting</option>
+        <option value="completed">Completed</option>
+        <option value="failed">Failed / Aborted</option>
+        <option value="running">Running</option>
+      </select>
+    </label>
+
+    <div class="control-group action-group">
+      <span class="control-label">Filters</span>
+      <button id="clearFiltersBtn" class="button-secondary" type="button">Clear</button>
+    </div>
+  </section>
+
+  <section class="panel" id="activePanel">
+    <div class="panel-header">
+      <div>
+        <p class="section-kicker">Queue Overview</p>
+        <h2>Active Schedulers</h2>
+      </div>
+      <span class="panel-badge">Toolbar icon opens this panel</span>
+    </div>
+
+    <div class="table-shell">
+      <table>
+        <thead>
+          <tr>
+            <th>Scheduler / Class</th>
+            <th>Submitted Type</th>
+            <th>Status</th>
+            <th>Schedule Pattern</th>
+            <th>Previous Run</th>
+            <th>Next Run</th>
+            <th>Runs Today</th>
+          </tr>
+        </thead>
+        <tbody id="jobsTable"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="panel" id="todayPanel">
+    <div class="panel-header">
+      <div>
+        <p class="section-kicker" id="todayPanelKicker">Execution Timeline</p>
+        <h2 id="todayPanelTitle">Today's Scheduled Apex Runs</h2>
+      </div>
+      <span class="panel-badge subtle" id="todayPanelBadge">Due now and completed today</span>
+    </div>
+
+    <div class="table-shell">
+      <table>
+        <thead>
+          <tr>
+            <th>Scheduler / Class</th>
+            <th>Submitted Type</th>
+            <th>Status</th>
+            <th>Started / Next Run</th>
+            <th>Completed</th>
+            <th>Errors / Note</th>
+          </tr>
+        </thead>
+        <tbody id="todayRunsTable"></tbody>
+      </table>
+    </div>
+  </section>
+</div>
+
+<div class="drawer-backdrop" id="jobDrawerBackdrop" hidden></div>
+<aside class="job-drawer" id="jobDrawer" aria-hidden="true">
+  <div class="drawer-header">
+    <div>
+      <p class="section-kicker">Scheduler Detail</p>
+      <h2 id="drawerTitle">Scheduler Detail</h2>
+    </div>
+    <button class="drawer-close" id="closeDrawerBtn" type="button" aria-label="Close detail panel">&times;</button>
+  </div>
+  <div class="drawer-body">
+    <dl class="drawer-list">
+      <div>
+        <dt>Status</dt>
+        <dd id="drawerStatus">-</dd>
+      </div>
+      <div>
+        <dt>Submitted Type</dt>
+        <dd id="drawerType">-</dd>
+      </div>
+      <div>
+        <dt>Schedule Pattern</dt>
+        <dd id="drawerSchedulePattern">-</dd>
+      </div>
+      <div>
+        <dt>Cron</dt>
+        <dd id="drawerCron">-</dd>
+      </div>
+      <div>
+        <dt>Previous Run</dt>
+        <dd id="drawerPreviousRun">-</dd>
+      </div>
+      <div>
+        <dt>Next Run</dt>
+        <dd id="drawerNextRun">-</dd>
+      </div>
+      <div>
+        <dt>Times Triggered</dt>
+        <dd id="drawerTimesTriggered">-</dd>
+      </div>
+      <div>
+        <dt>Related Apex Class</dt>
+        <dd id="drawerApexClass">-</dd>
+      </div>
+      <div>
+        <dt>Recent Runs</dt>
+        <dd id="drawerRunSummary">-</dd>
+      </div>
+    </dl>
+  </div>
+</aside>
+
+<script src="utils/salesforce-api.js"></script>
+<script src="popup.js"></script>
+
+</body>
+</html>
