@@ -1,0 +1,101 @@
+{
+  "manifest_version": 3,
+  "name": "Salesforce Scheduler Inspector & Cron Builder",
+  "version": "1.1.0",
+  "description": "Monitor Salesforce scheduled jobs, review org-aware run status, and build Quartz cron expressions",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage",
+    "cookies",
+    "alarms",
+    "notifications"
+  ],
+  "host_permissions": [
+    "https://*.builder.salesforce-experience.com/*",
+    "https://*.cloudforce.com/*",
+    "https://*.cloudforce.mil/*",
+    "https://*.crmforce.mil/*",
+    "https://*.force.com.mcas.ms/*",
+    "https://*.salesforce.com/*",
+    "https://*.force.com/*",
+    "https://*.force.mil/*",
+    "https://*.salesforce-setup.com/*",
+    "https://*.salesforce.mil/*",
+    "https://*.sfcrmapps.cn/*",
+    "https://*.sfcrmproducts.cn/*",
+    "https://*.visualforce.com/*",
+    "https://*.visualforce.mil/*"
+  ],
+  "action": {
+    "default_title": "Salesforce Scheduler Inspector & Cron Builder",
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.builder.salesforce-experience.com/*",
+        "https://*.cloudforce.com/*",
+        "https://*.cloudforce.mil/*",
+        "https://*.crmforce.mil/*",
+        "https://*.force.com.mcas.ms/*",
+        "https://*.force.com/*",
+        "https://*.force.mil/*",
+        "https://*.salesforce-setup.com/*",
+        "https://*.salesforce.com/*",
+        "https://*.salesforce.mil/*",
+        "https://*.sfcrmapps.cn/*",
+        "https://*.sfcrmproducts.cn/*",
+        "https://*.visualforce.com/*",
+        "https://*.visualforce.mil/*"
+      ],
+      "js": [
+        "utils/salesforce-host-support.js",
+        "salesforce-launcher.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "popup.html",
+        "popup-embed.js",
+        "popup.css",
+        "popup.js",
+        "cron-maker.html",
+        "cron-maker.css",
+        "cron-maker.js",
+        "utils/salesforce-host-support.js",
+        "utils/salesforce-api.js",
+        "icons/icon16.png",
+        "icons/icon48.png",
+        "icons/icon128.png"
+      ],
+      "matches": [
+        "https://*.builder.salesforce-experience.com/*",
+        "https://*.cloudforce.com/*",
+        "https://*.cloudforce.mil/*",
+        "https://*.crmforce.mil/*",
+        "https://*.force.com.mcas.ms/*",
+        "https://*.force.com/*",
+        "https://*.force.mil/*",
+        "https://*.salesforce-setup.com/*",
+        "https://*.salesforce.com/*",
+        "https://*.salesforce.mil/*",
+        "https://*.sfcrmapps.cn/*",
+        "https://*.sfcrmproducts.cn/*",
+        "https://*.visualforce.com/*",
+        "https://*.visualforce.mil/*"
+      ]
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}
