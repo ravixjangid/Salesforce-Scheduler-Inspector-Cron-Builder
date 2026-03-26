@@ -129,6 +129,10 @@ getCandidateApiOrigins(tabUrl) {
     origins.unshift(`https://${host.replace(".lightning.force.com", ".my.salesforce.com")}`);
   }
 
+  if (host.endsWith(".my.salesforce-setup.com")) {
+    origins.unshift(`https://${host.replace(".my.salesforce-setup.com", ".my.salesforce.com")}`);
+  }
+
   if (host.endsWith(".visual.force.com")) {
     origins.unshift(`https://${host.replace(".visual.force.com", ".my.salesforce.com")}`);
   }

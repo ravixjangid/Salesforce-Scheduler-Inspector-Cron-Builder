@@ -1,49 +1,15 @@
 const SalesforceHostSupport = {
 
-  SUPPORTED_URL_PATTERNS: [
-    "https://*.builder.salesforce-experience.com/*",
-    "https://*.cloudforce.com/*",
-    "https://*.cloudforce.mil/*",
-    "https://*.crmforce.mil/*",
-    "https://*.force.com.mcas.ms/*",
-    "https://*.force.com/*",
-    "https://*.force.mil/*",
-    "https://*.salesforce-setup.com/*",
-    "https://*.salesforce.com/*",
-    "https://*.salesforce.mil/*",
-    "https://*.sfcrmapps.cn/*",
-    "https://*.sfcrmproducts.cn/*",
-    "https://*.visualforce.com/*",
-    "https://*.visualforce.mil/*"
-  ],
-
   SUPPORTED_HOST_SUFFIXES: [
-    ".builder.salesforce-experience.com",
-    ".cloudforce.com",
-    ".cloudforce.mil",
-    ".crmforce.mil",
-    ".force.com.mcas.ms",
-    ".force.com",
-    ".force.mil",
-    ".salesforce-setup.com",
     ".salesforce.com",
-    ".salesforce.mil",
-    ".sfcrmapps.cn",
-    ".sfcrmproducts.cn",
-    ".visualforce.com",
-    ".visualforce.mil"
+    ".salesforce-setup.com",
+    ".force.com"
   ],
 
   SCHEDULER_HOST_SUFFIXES: [
-    ".cloudforce.com",
-    ".cloudforce.mil",
-    ".crmforce.mil",
-    ".force.com",
-    ".force.mil",
     ".salesforce.com",
-    ".salesforce.mil",
-    ".sfcrmapps.cn",
-    ".sfcrmproducts.cn"
+    ".salesforce-setup.com",
+    ".force.com"
   ],
 
   isSupportedHost(hostname) {

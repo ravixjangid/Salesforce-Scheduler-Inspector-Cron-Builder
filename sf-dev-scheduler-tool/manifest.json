@@ -1,31 +1,18 @@
 {
   "manifest_version": 3,
   "name": "Salesforce Scheduler Inspector & Cron Builder",
-  "version": "1.1.0",
+  "version": "1.0.0",
   "description": "Monitor Salesforce scheduled jobs, review org-aware run status, and build Quartz cron expressions",
   "permissions": [
-    "activeTab",
-    "scripting",
     "storage",
     "cookies",
     "alarms",
     "notifications"
   ],
   "host_permissions": [
-    "https://*.builder.salesforce-experience.com/*",
-    "https://*.cloudforce.com/*",
-    "https://*.cloudforce.mil/*",
-    "https://*.crmforce.mil/*",
-    "https://*.force.com.mcas.ms/*",
     "https://*.salesforce.com/*",
-    "https://*.force.com/*",
-    "https://*.force.mil/*",
     "https://*.salesforce-setup.com/*",
-    "https://*.salesforce.mil/*",
-    "https://*.sfcrmapps.cn/*",
-    "https://*.sfcrmproducts.cn/*",
-    "https://*.visualforce.com/*",
-    "https://*.visualforce.mil/*"
+    "https://*.force.com/*"
   ],
   "action": {
     "default_title": "Salesforce Scheduler Inspector & Cron Builder",
@@ -34,20 +21,9 @@
   "content_scripts": [
     {
       "matches": [
-        "https://*.builder.salesforce-experience.com/*",
-        "https://*.cloudforce.com/*",
-        "https://*.cloudforce.mil/*",
-        "https://*.crmforce.mil/*",
-        "https://*.force.com.mcas.ms/*",
-        "https://*.force.com/*",
-        "https://*.force.mil/*",
-        "https://*.salesforce-setup.com/*",
         "https://*.salesforce.com/*",
-        "https://*.salesforce.mil/*",
-        "https://*.sfcrmapps.cn/*",
-        "https://*.sfcrmproducts.cn/*",
-        "https://*.visualforce.com/*",
-        "https://*.visualforce.mil/*"
+        "https://*.salesforce-setup.com/*",
+        "https://*.force.com/*"
       ],
       "js": [
         "utils/salesforce-host-support.js",
@@ -73,20 +49,9 @@
         "icons/icon128.png"
       ],
       "matches": [
-        "https://*.builder.salesforce-experience.com/*",
-        "https://*.cloudforce.com/*",
-        "https://*.cloudforce.mil/*",
-        "https://*.crmforce.mil/*",
-        "https://*.force.com.mcas.ms/*",
-        "https://*.force.com/*",
-        "https://*.force.mil/*",
-        "https://*.salesforce-setup.com/*",
         "https://*.salesforce.com/*",
-        "https://*.salesforce.mil/*",
-        "https://*.sfcrmapps.cn/*",
-        "https://*.sfcrmproducts.cn/*",
-        "https://*.visualforce.com/*",
-        "https://*.visualforce.mil/*"
+        "https://*.salesforce-setup.com/*",
+        "https://*.force.com/*"
       ]
     }
   ],

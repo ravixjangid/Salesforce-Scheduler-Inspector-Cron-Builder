@@ -25,8 +25,6 @@ Features:
 
 ## Permission Justification
 
-- `activeTab`: identify the current Salesforce org context
-- `scripting`: open the embedded extension panel from the page launcher
 - `storage`: save preferences, cache scheduler snapshots, and store launcher position
 - `cookies`: read Salesforce session cookies for supported Salesforce domains so the extension can query Salesforce APIs for the org already open in Chrome
 - `alarms`: refresh cached scheduler data every 5 minutes
@@ -36,7 +34,7 @@ Features:
 
 The extension needs access to supported Salesforce domains to query scheduler data for the org the user is already logged into.
 
-The launcher is available on normal `http` and `https` pages so users can open the generic Cron Builder outside Salesforce. On non-Salesforce pages, the extension does not query Salesforce data or read page content for business logic.
+The floating launcher is injected only on supported Salesforce domains where the user already has a logged-in session. The extension does not inject content scripts on unrelated websites.
 
 ## Recommended Screenshots
 
@@ -49,7 +47,8 @@ The launcher is available on normal `http` and `https` pages so users can open t
 
 Use these instructions in the Chrome Web Store "Test instructions" field.
 
-1. Open any supported Salesforce org in Chrome and sign in with a valid Salesforce user session.
+1. Open any supported Salesforce org in Chrome and sign in with a valid Sa
+lesforce user session.
 2. Refresh the Salesforce tab after installing or updating the extension.
 3. Confirm the floating launcher icon appears only on logged-in Salesforce pages.
 4. Click the launcher to open the first screen with both tools:
@@ -61,8 +60,8 @@ Use these instructions in the Chrome Web Store "Test instructions" field.
 Supported Salesforce host examples:
 
 - `https://*.salesforce.com/*`
+- `https://*.salesforce-setup.com/*`
 - `https://*.force.com/*`
-- `https://*.cloudforce.com/*`
 
 Notes for reviewers:
 

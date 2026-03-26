@@ -23,7 +23,7 @@ The extension stores data locally in your browser:
 
 - It does not send your data to any external server owned by this extension.
 - It does not upload Salesforce data outside your browser.
-- It does not read page content for non-Salesforce websites beyond rendering the Cron Builder launcher UI.
+- It does not inject into or read page content from non-Salesforce websites.
 - It does not sell or share your personal data.
 
 ## Third-party services

@@ -256,16 +256,60 @@
       font: 500 13px/1.5 "Segoe UI", Arial, sans-serif;
     }
 
-    .sfjm-menu-support-copy a,
+    .sfjm-menu-support-actions {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .sfjm-menu-support-icon,
     .sfjm-menu-support-link {
       color: #0b5cab;
       font-weight: 700;
       text-decoration: none;
     }
 
-    .sfjm-menu-support-copy a:hover,
+    .sfjm-menu-support-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      display: inline-grid;
+      place-items: center;
+      border: 1px solid rgba(11, 92, 171, 0.18);
+      background: rgba(255,255,255,0.92);
+      box-shadow: 0 8px 18px rgba(36, 56, 99, 0.06);
+      transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+    }
+
+    .sfjm-menu-support-icon svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .sfjm-menu-support-icon path,
+    .sfjm-menu-support-icon rect {
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .sfjm-menu-support-icon:hover,
     .sfjm-menu-support-link:hover {
       text-decoration: underline;
+    }
+
+    .sfjm-menu-support-icon:hover {
+      transform: translateY(-1px);
+      border-color: rgba(11, 92, 171, 0.28);
+      box-shadow: 0 12px 22px rgba(36, 56, 99, 0.1);
+    }
+
+    .sfjm-menu-support-icon:focus-visible,
+    .sfjm-menu-support-link:focus-visible {
+      outline: 2px solid rgba(11, 92, 171, 0.28);
+      outline-offset: 2px;
     }
 
     .sfjm-menu-support-link {
@@ -465,8 +509,16 @@
           ${menuCards}
         </div>
         <div class="sfjm-menu-support" aria-label="Support and feedback">
-          <p class="sfjm-menu-support-copy">Email: <a href="mailto:rj.sfdccloud@gmail.com">rj.sfdccloud@gmail.com</a></p>
-          <a class="sfjm-menu-support-link" href="https://forms.gle/exWd91UqZVh8v9oFA" target="_blank" rel="noreferrer">Report issue / Feedback</a>
+          <p class="sfjm-menu-support-copy">Support and feedback</p>
+          <div class="sfjm-menu-support-actions">
+            <a class="sfjm-menu-support-icon" href="mailto:rj.sfdccloud@gmail.com" aria-label="Email support" title="Email support">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="3.5" y="5.5" width="17" height="13" rx="2.5"></rect>
+                <path d="M5.5 8l6.5 5 6.5-5"></path>
+              </svg>
+            </a>
+            <a class="sfjm-menu-support-link" href="https://forms.gle/exWd91UqZVh8v9oFA" target="_blank" rel="noreferrer">Report issue / Feedback</a>
+          </div>
         </div>
       </div>
       <iframe id="${IFRAME_ID}" title="${isSchedulerHost ? "Salesforce Scheduler Inspector & Cron Builder" : "Cron Builder"}"></iframe>
